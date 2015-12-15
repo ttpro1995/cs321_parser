@@ -1,1 +1,7 @@
-Haven't implemented yet!
+Program
+    PlusExpr
+        Factor
+            INTLITERAL (15)
+        PLUS
+        Factor
+            INTLITERAL (20)
