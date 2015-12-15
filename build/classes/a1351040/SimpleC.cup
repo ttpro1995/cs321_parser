@@ -1,0 +1,65 @@
+
+import java_cup.runtime.*;
+import java.util.*;
+
+
+parser code {: 
+
+public void syntax_error(Symbol curToken) {
+    if (curToken.value == null) {
+       Errors.fatal(0,0, "SYNTAX ERROR at end of file");
+    }
+    else { 
+       MySymbol cur = (MySymbol)curToken;
+       Errors.fatal(cur.getLine(), cur.getColumn(),
+            "SYNTAX ERROR while reading token " + ((Scanner)this.getScanner()).getTokName(cur.sym) + " ("+ ((Scanner)this.getScanner()).yytext() + ")");
+    } 
+    System.exit(-1);
+} 
+
+:};
+
+
+/* Terminals */
+
+
+terminal String     ID;
+terminal Integer    INTLITERAL;
+terminal String     STRINGLITERAL;
+terminal Double     DOUBLELITERAL;
+
+terminal            PLUS;
+terminal            MINUS;
+terminal            TIMES;
+terminal            DIVIDE;
+
+
+/* Nonterminals */
+
+non terminal Program      program;
+non terminal Expr         expr;
+non terminal Term         term;
+non terminal Factor       factor;
+
+
+
+precedence left PLUS, MINUS;
+precedence left TIMES, DIVIDE;
+start with program; 
+
+/*
+ * grammar with actions
+ */
+ 
+program ::= expr: e {: RESULT = new Program(e); :}
+          ;
+
+expr ::= expr:e PLUS term:t {:RESULT = new PlusExpr(e,t); :}
+        |term: t {:RESULT = t; :}
+        ;
+
+term ::= term:t TIMES factor:f {:RESULT = new MulTerm(t,f); :}
+        |factor: f {:RESULT = f; :}
+        ;
+factor ::= INTLITERAL: lit {:RESULT = new Factor(lit); :}
+        ;
