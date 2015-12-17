@@ -1,0 +1,11 @@
+Program
+    PlusExpr
+        Factor
+            INTLITERAL (5)
+        PLUS
+        TimesExpr
+            Factor
+                INTLITERAL (10)
+            TIMES
+            Factor
+                INTLITERAL (20)

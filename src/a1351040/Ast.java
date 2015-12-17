@@ -69,51 +69,89 @@ class Program extends AST {
 
 
 abstract class Expr extends AST{
-    protected Expr expr;
-    protected Term term;
+    protected Expr e1;
+    protected Expr e2;
+   
 }
 
 class PlusExpr extends Expr{
 
-    public PlusExpr(Expr expr, Term term) {
-        this.expr = expr;
-        this.term =term;
+    public PlusExpr(Expr e1, Expr e2) {
+        this.e1 = e1;
+        this.e2 = e2;
     }
-     @Override
-    public void printTree(PrintWriter p, int indent) {
-        indent = this.printName(p, indent);
-        expr.printTree(p, indent);
-        printTerm(p,indent,sym.PLUS);
-        term.printTree(p, indent);
-    }
-}
 
-abstract class Term extends Expr{
-    protected Term term;
-    protected Factor factor;
-}
-
-class MulTerm extends Term{
-
-    public MulTerm(Term term, Factor factor) {
-        this.factor = factor;
-        this.term = term;
-    }
     @Override
     public void printTree(PrintWriter p, int indent) {
-        
+        indent = this.printName(p, indent);
+        e1.printTree(p, indent);
+        this.printTerm(p, indent, sym.PLUS);
+        e2.printTree(p, indent);
     }
 }
 
-class Factor extends Term{
-    protected int num;
+class MinusExpr extends Expr{
+
+    public MinusExpr(Expr e1, Expr e2) {
+        this.e1 = e1;
+        this.e2 = e2;
+    }
+
+    @Override
+    public void printTree(PrintWriter p, int indent) {
+        indent = this.printName(p, indent);
+        e1.printTree(p, indent);
+        this.printTerm(p, indent, sym.MINUS);
+        e2.printTree(p, indent);
+    }
+}
+
+
+class TimesExpr extends Expr{
+
+    public TimesExpr(Expr e1, Expr e2) {
+        this.e1 = e1;
+        this.e2 = e2;
+    }
+
+    @Override
+    public void printTree(PrintWriter p, int indent) {
+        indent = this.printName(p, indent);
+        e1.printTree(p, indent);
+        this.printTerm(p, indent, sym.TIMES);
+        e2.printTree(p, indent);
+    }
+}
+
+class DivideExpr extends Expr{
+
+    public DivideExpr(Expr e1, Expr e2) {
+        this.e1 = e1;
+        this.e2 = e2;
+    }
+
+    @Override
+    public void printTree(PrintWriter p, int indent) {
+        indent = this.printName(p, indent);
+        e1.printTree(p, indent);
+        this.printTerm(p, indent, sym.DIVIDE);
+        e2.printTree(p, indent);
+    }
+}
+
+
+class Factor extends Expr{
+   protected int num;
 
     public Factor(int num) {
         this.num = num;
     }
+
     @Override
     public void printTree(PrintWriter p, int indent) {
-         indent = this.printName(p, indent);
-          printTerm(p,indent,sym.INTLITERAL,Integer.toString(num));
+        indent = printName(p,indent);
+        this.printTerm(p, indent, sym.INTLITERAL,Integer.toString(num));
     }
+   
+    
 }

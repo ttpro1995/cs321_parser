@@ -1,9 +1,9 @@
 Program
     PlusExpr
-        PlusExpr
+        TimesExpr
             Factor
                 INTLITERAL (5)
-            PLUS
+            TIMES
             Factor
                 INTLITERAL (10)
         PLUS

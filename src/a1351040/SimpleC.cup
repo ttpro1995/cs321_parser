@@ -54,12 +54,12 @@ start with program;
 program ::= expr: e {: RESULT = new Program(e); :}
           ;
 
-expr ::= expr:e PLUS term:t {:RESULT = new PlusExpr(e,t); :}
-        |term: t {:RESULT = t; :}
+expr ::= expr:e1 PLUS expr:e2 {:RESULT = new PlusExpr(e1,e2); :}
+        |expr:e1 MINUS expr:e2 {:RESULT = new MinusExpr(e1,e2); :}
+        |expr:e1 TIMES expr:e2 {:RESULT = new TimesExpr(e1,e2); :}
+        |expr:e1 DIVIDE expr:e2 {:RESULT = new DivideExpr(e1,e2); :}
+        |factor: t {:RESULT = t; :}
         ;
 
-term ::= term:t TIMES factor:f {:RESULT = new MulTerm(t,f); :}
-        |factor: f {:RESULT = f; :}
-        ;
 factor ::= INTLITERAL: lit {:RESULT = new Factor(lit); :}
         ;
