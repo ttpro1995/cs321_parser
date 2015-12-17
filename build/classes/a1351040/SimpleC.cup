@@ -32,7 +32,8 @@ terminal            PLUS;
 terminal            MINUS;
 terminal            TIMES;
 terminal            DIVIDE;
-
+terminal            LBRACKET;
+terminal            RBRACKET;
 
 /* Nonterminals */
 
@@ -61,5 +62,6 @@ expr ::= expr:e1 PLUS expr:e2 {:RESULT = new PlusExpr(e1,e2); :}
         |factor: t {:RESULT = t; :}
         ;
 
-factor ::= INTLITERAL: lit {:RESULT = new Factor(lit); :}
+factor ::= INTLITERAL: lit {:RESULT = new NumFactor(lit); :}
+        | LBRACKET expr:e RBRACKET {:RESULT = new BracketFactor(e); :}
         ;

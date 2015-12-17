@@ -139,11 +139,15 @@ class DivideExpr extends Expr{
     }
 }
 
+abstract class Factor extends Expr{
+    
+}
 
-class Factor extends Expr{
+
+class NumFactor extends Factor{
    protected int num;
 
-    public Factor(int num) {
+    public NumFactor(int num) {
         this.num = num;
     }
 
@@ -152,6 +156,22 @@ class Factor extends Expr{
         indent = printName(p,indent);
         this.printTerm(p, indent, sym.INTLITERAL,Integer.toString(num));
     }
-   
+}
+
+class BracketFactor extends Factor{
+    protected Expr expr;
+
+    public BracketFactor(Expr expr) {
+        this.expr = expr;
+    }
+    
+    
+    @Override
+    public void printTree(PrintWriter p, int indent) {
+        indent = this.printName(p, indent);
+        this.printTerm(p, indent, sym.LBRACKET);
+        expr.printTree(p, indent);
+        this.printTerm(p, indent, sym.RBRACKET);
+    }
     
 }

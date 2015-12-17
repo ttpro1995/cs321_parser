@@ -60,7 +60,8 @@ StringLiteral = L?\"([^\\\"\n]|\\.)*\"
 	 
 	"/" { return symbol(DIVIDE); }
 	
-
+        "("                            { return symbol(LBRACKET); }
+        ")"                            { return symbol(RBRACKET); }
 
     {IntegerLiteral} {
         int val;

@@ -1,11 +1,14 @@
 Program
-    PlusExpr
-        PlusExpr
-            Factor
-                INTLITERAL (5)
-            PLUS
-            Factor
-                INTLITERAL (10)
-        PLUS
-        Factor
+    TimesExpr
+        BracketFactor
+            LBRACKET
+            PlusExpr
+                NumFactor
+                    INTLITERAL (5)
+                PLUS
+                NumFactor
+                    INTLITERAL (10)
+            RBRACKET
+        TIMES
+        NumFactor
             INTLITERAL (20)
